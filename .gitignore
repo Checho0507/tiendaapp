@@ -1,6 +1,12 @@
+# Byte-compiled / optimized / DLL files
+*__pycache__/
+*.py[cod]
+*$py.class
+
 # Virtual environments
 Backend/venv/
 Backend/env
+Backend/__pycache__/
 ENV/
 env.bak/
 venv.bak/
@@ -9,7 +15,6 @@ venv.bak/
 .env
 .flaskenv
 *.env
-*venv
 
 # Database files (if using SQLite, but we use PostgreSQL, but just in case)
 *.db
