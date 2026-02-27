@@ -1,4 +1,6 @@
-const API_BASE = 'http://localhost:8000';
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+
+// El resto de las funciones (fetchEntries, createEntry, fetchSummary) quedan igual
 
 export async function fetchEntries(month?: number, year?: number): Promise<Entry[]> {
   let url = `${API_BASE}/entries/`;
