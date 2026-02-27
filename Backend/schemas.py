@@ -13,7 +13,7 @@ class Entry(EntryBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class MonthlySummary(BaseModel):
     month: int

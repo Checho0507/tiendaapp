@@ -55,6 +55,9 @@ def get_db():
         db.close()
 
 # ------------------- ENDPOINTS -------------------
+@app.get("/")
+def root():
+    return {"message": "Restaurant Manager API", "docs": "/docs"}
 
 @app.post("/entries/", response_model=schemas.Entry, status_code=201)
 def create_entry(entry: schemas.EntryCreate, db: Session = Depends(get_db)):
