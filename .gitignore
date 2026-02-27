@@ -1,0 +1,41 @@
+# Virtual environments
+Backend/venv/
+Backend/env
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables
+.env
+.flaskenv
+*.env
+*venv
+
+# Database files (if using SQLite, but we use PostgreSQL, but just in case)
+*.db
+*.sqlite3
+
+# Frontend dependencies and build
+Frontend/node_modules/
+frontend/build/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+./Backend/.env
