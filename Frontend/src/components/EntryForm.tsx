@@ -15,8 +15,8 @@ const EntryForm: React.FC<Props> = ({ onEntryAdded }) => {
     e.preventDefault();
     const newEntry: EntryCreate = {
       date,
-      expenses: parseFloat(expenses),
-      production: parseFloat(production),
+      expenses: expenses === '' ? undefined : parseFloat(expenses),
+      production: production === '' ? undefined : parseFloat(production),
     };
     try {
       await createEntry(newEntry);
@@ -31,39 +31,49 @@ const EntryForm: React.FC<Props> = ({ onEntryAdded }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: '2rem', border: '1px solid #ccc', padding: '1rem' }}>
-      <h2>Registrar entrada diaria</h2>
-      <div style={{ marginBottom: '0.5rem' }}>
-        <label>Fecha: </label>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
+    <div className="card mb-4">
+      <div className="card-body">
+        <h2 className="card-title h4">Registrar entrada diaria</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="date" className="form-label">Fecha</label>
+            <input
+              type="date"
+              className="form-control"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="expenses" className="form-label">Gastos (opcional)</label>
+            <input
+              type="number"
+              step="0.01"
+              className="form-control"
+              id="expenses"
+              value={expenses}
+              onChange={(e) => setExpenses(e.target.value)}
+              placeholder="0.00"
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="production" className="form-label">Producción (opcional)</label>
+            <input
+              type="number"
+              step="0.01"
+              className="form-control"
+              id="production"
+              value={production}
+              onChange={(e) => setProduction(e.target.value)}
+              placeholder="0.00"
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">Guardar</button>
+        </form>
       </div>
-      <div style={{ marginBottom: '0.5rem' }}>
-        <label>Gastos: </label>
-        <input
-          type="number"
-          step="0.01"
-          value={expenses}
-          onChange={(e) => setExpenses(e.target.value)}
-          required
-        />
-      </div>
-      <div style={{ marginBottom: '0.5rem' }}>
-        <label>Producción: </label>
-        <input
-          type="number"
-          step="0.01"
-          value={production}
-          onChange={(e) => setProduction(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Guardar</button>
-    </form>
+    </div>
   );
 };
 

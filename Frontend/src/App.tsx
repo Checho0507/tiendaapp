@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import EntryForm from './components/EntryForm';
 import EntriesList from './components/EntriesList';
-import MonthlySummary from './components/MonthlySummary';
+import SummarySelector from './components/SummarySelector';
 
 function App() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   const handleEntryAdded = () => {
-    setRefreshKey(prev => prev + 1); // fuerza recarga de la lista
+    setRefreshKey(prev => prev + 1);
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <h1>Administrador del Restaurante</h1>
-      <EntryForm onEntryAdded={handleEntryAdded} />
-      <EntriesList key={refreshKey} />
-      <MonthlySummary />
+    <div className="container mt-4">
+      <h1 className="text-center mb-4">Administrador del Restaurante</h1>
+      <div className="row">
+        <div className="col-md-6">
+          <EntryForm onEntryAdded={handleEntryAdded} />
+        </div>
+        <div className="col-md-6">
+          <SummarySelector />
+        </div>
+      </div>
+      <div className="row mt-4">
+        <div className="col-12">
+          <EntriesList key={refreshKey} />
+        </div>
+      </div>
     </div>
   );
 }

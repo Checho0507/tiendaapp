@@ -1,13 +1,10 @@
-import { Entry, EntryCreate, MonthlySummary } from './types';
+import { Entry, EntryCreate, SummaryResponse } from './types';
 
-// Usa la variable de entorno REACT_APP_API_URL si está definida, si no, localhost:8000
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const BASE_URL = API_BASE.replace(/\/$/, '');
 
-/**
- * Obtiene todas las entradas, opcionalmente filtradas por mes y año.
- */
 export async function fetchEntries(month?: number, year?: number): Promise<Entry[]> {
-  const url = new URL(`${API_BASE}/entries/`);
+  const url = new URL(`${BASE_URL}/entries/`);
   if (month) url.searchParams.append('month', month.toString());
   if (year) url.searchParams.append('year', year.toString());
 
@@ -19,14 +16,17 @@ export async function fetchEntries(month?: number, year?: number): Promise<Entry
   return res.json();
 }
 
-/**
- * Crea una nueva entrada diaria.
- */
 export async function createEntry(entry: EntryCreate): Promise<Entry> {
-  const res = await fetch(`${API_BASE}/entries/`, {
+  // Asegurar que los valores opcionales se envíen como 0 si no están definidos
+  const payload = {
+    date: entry.date,
+    expenses: entry.expenses ?? 0,
+    production: entry.production ?? 0,
+  };
+  const res = await fetch(`${BASE_URL}/entries/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(entry),
+    body: JSON.stringify(payload),
   });
   if (!res.ok) {
     const errorText = await res.text();
@@ -35,13 +35,10 @@ export async function createEntry(entry: EntryCreate): Promise<Entry> {
   return res.json();
 }
 
-/**
- * Obtiene el resumen mensual (total gastos, producción y neto) para un mes y año dados.
- */
-export async function fetchSummary(month: number, year: number): Promise<MonthlySummary> {
-  const url = new URL(`${API_BASE}/summary/`);
-  url.searchParams.append('month', month.toString());
-  url.searchParams.append('year', year.toString());
+export async function fetchSummaryByPeriod(period: string, dateRef: string): Promise<SummaryResponse> {
+  const url = new URL(`${BASE_URL}/summary/by-period`);
+  url.searchParams.append('period', period);
+  url.searchParams.append('date_ref', dateRef);
 
   const res = await fetch(url.toString());
   if (!res.ok) {
