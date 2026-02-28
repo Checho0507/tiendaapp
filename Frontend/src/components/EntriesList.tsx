@@ -56,7 +56,7 @@ const EntriesList: React.FC = () => {
                 {entries.map((entry) => (
                   <tr key={entry.id}>
                     <td>{entry.id}</td>
-                    <td>{new Date(entry.date).toLocaleDateString('es-ES')}</td>
+                    <td>{new Date(entry.date).toLocaleDateString('es-CO')}</td>
                     <td>${entry.expenses.toFixed(2)}</td>
                     <td>${entry.production.toFixed(2)}</td>
                   </tr>
