@@ -23,16 +23,20 @@ const SummarySelector: React.FC = () => {
   };
 
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('es-ES');
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('es-ES');
   };
 
   return (
-    <div className="card">
+    <div className="card mb-4 shadow-sm border-0" style={{ backgroundColor: '#fff9e6' }}>
       <div className="card-body">
-        <h2 className="card-title h4">Resumen por período</h2>
+        <h2 className="card-title h4" style={{ color: '#CE1126', borderBottom: '2px solid #FCD116', paddingBottom: '0.5rem' }}>
+          <i className="bi bi-bar-chart-steps me-2"></i>
+          Resumen por período
+        </h2>
         <form onSubmit={handleSubmit} className="row g-3 mb-3">
           <div className="col-md-4">
-            <label htmlFor="period" className="form-label">Período</label>
+            <label htmlFor="period" className="form-label fw-bold">Período</label>
             <select
               id="period"
               className="form-select"
@@ -47,7 +51,7 @@ const SummarySelector: React.FC = () => {
             </select>
           </div>
           <div className="col-md-4">
-            <label htmlFor="date" className="form-label">Fecha de referencia</label>
+            <label htmlFor="date" className="form-label fw-bold">Fecha de referencia</label>
             <input
               type="date"
               className="form-control"
@@ -58,19 +62,19 @@ const SummarySelector: React.FC = () => {
             />
           </div>
           <div className="col-md-4 d-flex align-items-end">
-            <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+            <button type="submit" className="btn w-100" style={{ backgroundColor: '#FCD116', color: '#000', borderColor: '#CE1126' }} disabled={loading}>
               {loading ? 'Consultando...' : 'Ver resumen'}
             </button>
           </div>
         </form>
 
         {summary && (
-          <div className="mt-3 p-3 bg-light rounded">
+          <div className="mt-3 p-3 rounded" style={{ backgroundColor: '#e8f0fe', borderLeft: '5px solid #003893' }}>
             <p><strong>Período:</strong> {summary.period}</p>
             <p><strong>Desde:</strong> {formatDate(summary.start_date)} <strong>Hasta:</strong> {formatDate(summary.end_date)}</p>
             <p><strong>Total gastos:</strong> ${summary.total_expenses.toFixed(2)}</p>
             <p><strong>Total producción:</strong> ${summary.total_production.toFixed(2)}</p>
-            <p><strong>Ganancia neta:</strong> ${summary.net.toFixed(2)}</p>
+            <p><strong>Ganancia neta:</strong> <span style={{ color: summary.net >= 0 ? '#003893' : '#CE1126', fontWeight: 'bold' }}>${summary.net.toFixed(2)}</span></p>
           </div>
         )}
       </div>

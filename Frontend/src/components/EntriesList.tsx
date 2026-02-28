@@ -31,23 +31,35 @@ const EntriesList: React.FC = () => {
     loadEntries();
   }, []);
 
+  // Formatear fecha para mostrar en local sin desfase
+  const formatLocalDate = (dateStr: string) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
   if (loading) return <div className="text-center">Cargando...</div>;
 
   return (
-    <div className="card mb-4">
+    <div className="card mb-4 shadow-sm border-0" style={{ backgroundColor: '#fff9e6' }}>
       <div className="card-body">
-        <h2 className="card-title h4">
-          Entradas del día {lastDate ? new Date(lastDate).toLocaleDateString('es-ES') : ''}
+        <h2 className="card-title h4" style={{ color: '#CE1126', borderBottom: '2px solid #FCD116', paddingBottom: '0.5rem' }}>
+          <i className="bi bi-list-ul me-2"></i>
+          Entradas del día {lastDate ? formatLocalDate(lastDate) : ''}
         </h2>
         {entries.length === 0 ? (
           <p className="text-muted">No hay entradas para la última fecha registrada.</p>
         ) : (
           <div className="table-responsive">
-            <table className="table table-striped table-hover">
-              <thead>
+            <table className="table table-striped table-hover align-middle">
+              <thead className="table-dark" style={{ backgroundColor: '#003893' }}>
                 <tr>
                   <th>ID</th>
                   <th>Fecha</th>
+                  <th>Descripción</th>
                   <th>Gastos</th>
                   <th>Producción</th>
                 </tr>
@@ -56,7 +68,8 @@ const EntriesList: React.FC = () => {
                 {entries.map((entry) => (
                   <tr key={entry.id}>
                     <td>{entry.id}</td>
-                    <td>{new Date(entry.date).toLocaleDateString('es-CO')}</td>
+                    <td>{formatLocalDate(entry.date)}</td>
+                    <td>{entry.description}</td>
                     <td>${entry.expenses.toFixed(2)}</td>
                     <td>${entry.production.toFixed(2)}</td>
                   </tr>

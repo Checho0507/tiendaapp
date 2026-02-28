@@ -1,14 +1,16 @@
 export interface Entry {
   id: number;
-  date: string;
+  date: string;          // formato "YYYY-MM-DD"
+  description: string;
   expenses: number;
   production: number;
 }
 
 export interface EntryCreate {
   date: string;
-  expenses?: number;  // opcional
-  production?: number; // opcional
+  description: string;   // obligatoria
+  expenses?: number;     // opcional (se enviará 0 si no se provee)
+  production?: number;   // opcional
 }
 
 export interface SummaryResponse {

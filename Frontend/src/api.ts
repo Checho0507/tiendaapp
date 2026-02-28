@@ -17,9 +17,9 @@ export async function fetchEntries(month?: number, year?: number): Promise<Entry
 }
 
 export async function createEntry(entry: EntryCreate): Promise<Entry> {
-  // Asegurar que los valores opcionales se envíen como 0 si no están definidos
   const payload = {
     date: entry.date,
+    description: entry.description,
     expenses: entry.expenses ?? 0,
     production: entry.production ?? 0,
   };

@@ -5,6 +5,7 @@ import enum
 
 class EntryBase(BaseModel):
     date: date
+    description: str = Field(..., min_length=1, description="Descripción obligatoria")
     expenses: Optional[float] = Field(0.0, ge=0)
     production: Optional[float] = Field(0.0, ge=0)
 
